@@ -15,13 +15,13 @@ function solve() {
         const response = await fetch(url)
         station = await response.json()
 
+        console.log(station)
+
         busStation.textContent = `Next stop ${station.name}`
 
         arriveBtn.disabled = false
 
     }
-
-
 
     function arrive() {
         busStation.textContent = `Arriving at ${station.name}`
