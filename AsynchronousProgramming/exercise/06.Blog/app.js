@@ -7,14 +7,13 @@ async function display() {
     let postTitle = document.getElementById('post-title')
     postTitle.textContent = 'Loading...'
     let postBody = document.getElementById('post-body')
-    postBody.textContent=''
+    postBody.textContent = ''
     let commentsForPost = document.getElementById('post-comments')
-    commentsForPost.innerHTML=''
-
+    commentsForPost.innerHTML = ''
 
     const id = document.getElementById('posts').value
     let [post, comments] = await Promise.all([getPostById(id), getCommentsById(id)])
-     postTitle.textContent= post.title
+    postTitle.textContent = post.title
     postBody.textContent = post.body
 
     comments.forEach(c => {
@@ -22,13 +21,12 @@ async function display() {
         liEl.textContent = c.text
         commentsForPost.appendChild(liEl)
     })
-
-
 }
 
 
-async function getAllPosts(){
+async function getAllPosts(ev) {
     const posts = document.getElementById('posts')
+    posts.innerHTML = ''
     const url = 'http://localhost:3030/jsonstore/blog/posts'
     const request = await fetch(url)
     const data = await request.json()
@@ -40,20 +38,18 @@ async function getAllPosts(){
         posts.appendChild(option)
     })
 }
-async function getPostById(id){
+
+async function getPostById(id) {
     const url = `http://localhost:3030/jsonstore/blog/posts/` + id
     const request = await fetch(url)
-    const data = await request.json()
-    return data
+    return  await request.json()
 }
 
-async function getCommentsById(id){
+async function getCommentsById(id) {
     const url = `http://localhost:3030/jsonstore/blog/comments`
     const request = await fetch(url)
     const data = await request.json()
-    let filteredComments = Object.values(data).filter(c => c.postId === id)
-    return filteredComments
+    return Object.values(data).filter(c => c.postId === id)
 }
-
 
 attachEvents();
