@@ -1,10 +1,18 @@
 async function attachEvents() {
     const location = document.getElementById('location').value
 
-    const url = `http://localhost:3030/jsonstore/forecaster/locations`
-    const response = await fetch(url)
+    const response = await fetch(`http://localhost:3030/jsonstore/forecaster/locations`)
     const data = await response.json()
-    let code = data[2].code
+
+    let code
+
+    Object.entries(data).forEach(el => {
+        if (el[1].name === location){
+            code = el[1].code
+        }
+    })
+
+    // let code = data[2].code
 
     const [t, u] = await Promise.all([today(code), upcoming(code)])
 
@@ -20,15 +28,11 @@ async function attachEvents() {
         'Rain': '&#x2614',
         'Degrees': '&#176'
     }
-
     function submit() {
-        console.log(Object.entries(data))
-
         forecastDiv.style.display = ''
         let divElToday = document.createElement('div')
         divElToday.innerHTML = `<div class="forecasts"><span class="condition symbol">${symbols[t.forecast.condition]}</span>><span class="condition"><span class="forecast-data">${t.name}</span><span class="forecast-data">${t.forecast.low}${symbols['Degrees']}/${t.forecast.high}${symbols['Degrees']}</span><span class="forecast-data">${t.forecast.condition}</span></span></div>`
         currentForecast.appendChild(divElToday)
-
         let divElUpcoming = document.createElement('div')
         divElUpcoming.innerHTML = `<div class="forecast-info">
 <span class="upcoming">
@@ -50,27 +54,18 @@ async function attachEvents() {
 </span>
 
 </div>`
-
         upcomingForecast.appendChild(divElUpcoming)
-
-
     }
 }
 
 async function today(code) {
     const urlToday = `http://localhost:3030/jsonstore/forecaster/today/${code}`
     const responseToday = await fetch(urlToday)
-    const dataToday = await responseToday.json()
-    return dataToday
-
+    return (await responseToday).json()
 }
-
 async function upcoming(code) {
     const urlUpcoming = `http://localhost:3030/jsonstore/forecaster/upcoming/${code}`
-    const responseUpcoming = await fetch(urlUpcoming)
-    const dataUpcoming = await responseUpcoming.json()
-    return dataUpcoming
+    const responseUpcoming = fetch(urlUpcoming)
+    return (await responseUpcoming).json()
 }
-
-
 attachEvents()
