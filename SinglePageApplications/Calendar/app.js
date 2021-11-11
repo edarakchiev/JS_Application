@@ -101,7 +101,7 @@ function onClickYear(event) {
 function onClickMonth(event) {
     let content = event.target.textContent.trim()
     const month = months[content]
-    month()
+    month(content)
 
 }
 
