@@ -15,3 +15,4 @@ document.querySelector('nav').addEventListener('click', (event) => {
         view()
     }
 })
+showHome()
