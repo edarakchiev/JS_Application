@@ -9,7 +9,7 @@ const mochData = {
     "d953e5fb-a585-4d6b-92d3-ee90697398a1":{
         "author":"Svetlin Nakov",
         "title":"C# Fundamentals"
-}
+    }
 };
 
 function json(data){
@@ -56,5 +56,21 @@ describe('Tests', async function() {
         expect(rows[1]).to.contains('Rowling');
         expect(rows[2]).to.contains('C# Fundamentals');
         expect(rows[2]).to.contains('Nakov');
+    });
+    it('can create book', async () => {
+        await page.goto('http://localhost:5500/Book-Library/');
+
+        await page.fill('form#createForm >> input[name="title"]', 'Title');
+        await page.fill('form#createForm >> input[name="author"]', 'Author');
+
+        const [request] = await Promise.all([
+            page.waitForRequest(request => request.method() == 'POST'),
+            page.click('form#createForm >> text=Submit')
+        ]);
+
+        const data = JSON.parse(request.postData());
+        expect(data.title).to.equal('Title');
+        expect(data.author).to.equal('Author');
+
     });
 });
