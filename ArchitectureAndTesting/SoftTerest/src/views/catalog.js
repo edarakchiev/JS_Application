@@ -2,19 +2,29 @@ import { getAllIdeas } from "../api/data.js";
 import { e } from "./dom.js";
 
 const section = document.getElementById('dashboard-holder')
+section.addEventListener('click', onDetails)
 section.remove();
+let ctx = null
 
-export async function showCatalogPage(ctx) {
+export async function showCatalogPage(ctxTarget) {
+    ctx = ctxTarget
     ctx.showSection(section)
     loadIdeas()
 }
 
 async function loadIdeas(idea){
     const ideas = await getAllIdeas()
-    const fragment = document.createDocumentFragment()
+
+    if (ideas.length == 0) {
+        section.replaceChildren(e('h1', {}, 'No ideas yet! Be the firs one :)'));
+    } else {
+        const fragment = document.createDocumentFragment()
 
     ideas.map(createIdeaCard).forEach(i => fragment.appendChild(i))
     section.replaceChildren(fragment)
+    }
+
+    
 }
 
 function createIdeaCard(idea){
@@ -28,4 +38,13 @@ function createIdeaCard(idea){
         <img class="card-image" src="${idea.img}" alt="Card image cap">
         <a data-id="${idea._id}" class="btn" href="">Details</a>`
     return element
+}
+
+function onDetails(ev) {
+    if (ev.target.tagName == 'A'){
+        const id = ev.target.dataset.id
+        ev.preventDefault()
+        ctx.goTo('details', id)
+    }
+
 }
