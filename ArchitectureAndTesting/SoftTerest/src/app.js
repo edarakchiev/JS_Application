@@ -28,8 +28,12 @@ const nav = document.querySelector('nav');
 nav.addEventListener('click', onNavigate);
 const ctx = {
     goTo,
-    showSection
+    showSection,
+    updateNav
 }
+updateNav()
+// Start application in home view
+goTo('home')
 
 function onNavigate(event) {
     const name = links[event.target.id];
@@ -41,7 +45,18 @@ function onNavigate(event) {
 
 function goTo(name, ...params) {
     const view = views[name];
-    if (typeof view == 'function'){
-        view(ctx, ...params);
+    if (typeof view == 'function') {
+        view(ctx, ...params)
+    }
+}
+
+function updateNav(){
+    const userData = JSON.parse(sessionStorage.getItem('userData'))
+    if (userData != null) {
+        [...nav.querySelectorAll('.user')].forEach(l => l.style.display = 'block');
+        [...nav.querySelectorAll('.guest')].forEach(l => l.style.display = 'none');
+    } else {
+        [...nav.querySelectorAll('.user')].forEach(l => l.style.display = 'none');
+        [...nav.querySelectorAll('.guest')].forEach(l => l.style.display = 'block');
     }
 }
