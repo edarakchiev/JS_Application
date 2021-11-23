@@ -12,7 +12,7 @@ const links = {
     'getStartedLink': 'home',
     'catalogLink': 'catalog',
     'loginLink': 'login',
-    'registerLink': 'register',
+    'registerLink': 'register',lit
     'createLink': 'create'
 }
 
