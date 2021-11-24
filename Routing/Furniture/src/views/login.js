@@ -35,6 +35,7 @@ export function loginPage(ctx) {
         const password = formData.get('password')
 
         await login(email, password)
+        ctx.updateUserNav()
         ctx.page.redirect('/')
     }
 }
