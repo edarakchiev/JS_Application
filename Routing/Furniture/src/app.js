@@ -19,7 +19,7 @@ page('/create', createPage)
 page('/edit/:id', editPage)
 page('/login', loginPage)
 page('/register', registerPage)
-page('/my-furniture', () => console.log('my furniture view'))
+page('/my-furniture', catalogPage)
 
 page.start()
 updateUserNav()
