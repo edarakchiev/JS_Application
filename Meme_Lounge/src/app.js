@@ -7,6 +7,9 @@ import { loginPage } from './views/loginPage.js'
 import { myProfilePage } from './views/myProfile.js'
 import { registerPage } from './views/register.js'
 
+import * as api from './api/data.js'
+window.api = api
+
 const root = document.getElementById('container')
 
 
