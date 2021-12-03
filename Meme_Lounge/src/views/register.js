@@ -46,7 +46,13 @@ export  function registerPage(ctx) {
         if (password != repeatPass) {
             return alert('Password don\'t match')
         }
-        await register(username, email, password, gender)
+        const data = {
+            username,
+            email ,
+            password,
+            gender
+        }
+        await register(data)
         ctx.updateUserNav()
         ctx.page.redirect('/all-memes')
     }

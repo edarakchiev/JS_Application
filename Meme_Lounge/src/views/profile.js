@@ -30,7 +30,6 @@ const memesPreview = (meme) => html`
 
 export async function profilePage(ctx){
     const userData = getUserData()
-    console.log(userData)
     const memes = await getMyItems(userData.id)
     ctx.render(profileTemplate(memes, userData))
 }
