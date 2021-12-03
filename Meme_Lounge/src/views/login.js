@@ -33,7 +33,7 @@ export function loginPage(ctx) {
         }
 
         await login(email, password)
-        ctx.updateUserNav
+        ctx.updateUserNav()
         ctx.page.redirect('/all-memes')
     }
 }

@@ -3,9 +3,11 @@ import { page, render} from './lib.js'
 import { getUserData } from './util.js'
 import { allMemesPage } from './views/allMemes.js'
 import { createPage } from './views/create.js'
+import { detailsPage } from './views/details.js'
+import { editPage } from './views/edit.js'
 import { homePage } from './views/home.js'
 import { loginPage } from './views/login.js'
-import { myProfilePage } from './views/myProfile.js'
+import { profilePage } from './views/profile.js'
 import { registerPage } from './views/register.js'
 
 const root = document.querySelector('main')
@@ -17,8 +19,10 @@ page('/', homePage)
 page('/all-memes', allMemesPage)
 page('/login', loginPage)
 page('/register', registerPage)
-page('/my-profile', myProfilePage)
+page('/my-profile', profilePage)
 page('/create', createPage)
+page('/edit/:id', editPage)
+page('/details/:id', detailsPage)
 
 page.start()
 updateUserNav()
