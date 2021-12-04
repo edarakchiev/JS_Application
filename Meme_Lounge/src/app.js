@@ -46,7 +46,7 @@ function updateUserNav(){
 }
 
 async function onLogout(){
-    console.log('logout')
     await logout()
+    updateUserNav()
     page.redirect('/')
 }

@@ -14,10 +14,10 @@ async function request(url, options) {
             const error = await response.json();
             throw new Error(error.message);
         }
-        if (response.status == 204) {
-            return response;
-        } else {
+        try{
             return response.json()
+        } catch {
+            return response;
         }
     } catch (err) {
         alert(err.message);
@@ -76,11 +76,13 @@ export async function register(username, email, password, gender) {
     const userData = {
         username: result.username,
         email: result.email,
-        gender: result.gender,
         id: result._id,
+        gender: result.gender,
         token: result.accessToken
     };
-    sessionStorage.setItem('userData', JSON.stringify(userData))
+    setUserData(userData)
+    return result
+    // sessionStorage.setItem('userData', JSON.stringify(userData))
 }
 
 export async function logout(){

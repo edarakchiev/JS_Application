@@ -23,6 +23,7 @@ const detailsTemplate = (meme, isOwner, onDelete) => html`
 export async function detailsPage(ctx) {
     const meme = await getById(ctx.params.id)
     const userData = getUserData()
+    console.log(meme)
     const isOwner = userData.id == meme._ownerId
     ctx.render(detailsTemplate(meme, isOwner, onDelete))
 
