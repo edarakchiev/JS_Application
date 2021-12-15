@@ -13,7 +13,6 @@ export async function getById(id){
     return api.get('/data/albums/' + id)
 }
 
-
 export async function createItem(data) {
     return api.post('/data/albums', data)
 }
